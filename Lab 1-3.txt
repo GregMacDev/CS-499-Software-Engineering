@@ -1,0 +1,119 @@
+//============================================================================
+// Name        : Lab1-3.cpp
+// Author      : Greg MacPhelemy
+// Date		   : May 8, 2020
+// Version     : 1.0
+// Copyright   : Copyright © 2017 SNHU COCE
+// Description : Lab 1-3 Up to Speed in C++
+//============================================================================
+
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+//============================================================================
+// Global definitions visible to all methods and classes
+//============================================================================
+
+// Defines a data structure to hold bid information together as a single unit of storage.
+struct ItemForBid{
+
+	string itemTitle;
+	string fundType;
+	string vehicleType;
+	double bidAmount;
+};
+
+/**
+ * Display the bid information
+ *
+ * @param ?type? data structure containing the bid info
+ */
+void displayBid(ItemForBid passedItem) {
+
+    cout << "Title: " << passedItem.itemTitle << endl;
+    cout << "Fund: " << passedItem.fundType << endl;
+    cout << "Vehicle: " << passedItem.vehicleType << endl;
+    cout << "Bid Amount: " << passedItem.bidAmount << endl;
+
+    return;
+}
+
+/**
+ * Simple C function to convert a string to a double
+ * after stripping out unwanted char
+ *
+ * credit: http://stackoverflow.com/a/24875936
+ *
+ * @param ch The character to strip out
+ */
+double strToDouble(string str, char ch) {
+
+    str.erase(remove(str.begin(), str.end(), ch), str.end());
+    return atof(str.c_str());
+}
+
+/*
+ * Prompt user for bid information
+ *
+ * @return data structure containing the bid info
+ */
+ItemForBid getBid() {
+
+    ItemForBid newItem;
+
+    cout << "Enter title: ";
+    cin.ignore();
+    getline(cin, newItem.itemTitle);
+
+    cout << "Enter fund: ";
+    cin >> newItem.fundType;
+
+    cout << "Enter vehicle: ";
+    cin.ignore();
+    getline(cin, newItem.vehicleType);
+
+    cout << "Enter amount: ";
+    cin.ignore();
+    string strAmount;
+    getline(cin, strAmount);
+    newItem.bidAmount = strToDouble(strAmount, '$');
+
+    return newItem;
+}
+
+
+/**
+ * The one and only main() method
+ */
+int main() {
+
+    // Declared instance of data structure to hold bid information
+	ItemForBid biddingItem;
+
+    // loop to display menu until exit chosen
+    int choice = 0;
+    while (choice != 9) {
+        cout << "Menu:" << endl;
+        cout << "  1. Enter Bid" << endl;
+        cout << "  2. Display Bid" << endl;
+        cout << "  9. Exit" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        // Method calls for biddingItem, from menu options
+        switch (choice) {
+            case 1:
+            	biddingItem = getBid();
+                break;
+            case 2:
+                displayBid(biddingItem);
+                break;
+        }
+    }
+
+    cout << "Good bye." << endl;
+
+    return 0;
+}
